@@ -13,13 +13,22 @@ fstream openAndProcessFile(const std::string &fileName, std::ios_base::openmode 
 bool createFileWithRandomNumbers(const std::string &fileName, const int numbersCount, const int maxNumberValue);
 bool isFileContainsSortedArray(const std::string &fileName);
 bool isNumericFileEmpty(const std::string &fileName);
-void directSortFile(const std::string &fileName, bool debug = false);
+bool directSortFile(const std::string &fileName, bool debug = false);
+bool naturalSortFile(const std::string &fileName, bool debug = false);
 
 int main()
 {   
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-    createFileWithRandomNumbers("file.txt", 10000, 1000000);
-    directSortFile("file.txt");
+    const int maxValue = 100000;
+    const int numberCount = 1000000;
+    const int testCount = 10;
+    for (int i = 0; i < testCount; ++i)
+    {
+        std::cout << "Test " << i + 1 << '\n';
+        createFileWithRandomNumbers("file.txt", numberCount, maxValue);
+        std::cout << "Direct sort " << (directSortFile("file.txt") ? "OK" : "NOT OK") << '\n';
+        std::cout << "Natural sort " << (naturalSortFile("file.txt") ? "OK" : "NOT OK") << '\n';
+    }
     return 0;
 }
 
@@ -73,7 +82,7 @@ bool isNumericFileEmpty(const std::string& fileName)
     return res;
 }
 
-void directSortFile(const std::string& fileName, bool debug)
+bool directSortFile(const std::string& fileName, bool debug)
 {
     fstream file = openAndProcessFile(fileName, std::ios::in);
     std::string fileNames[4];
@@ -152,10 +161,6 @@ void directSortFile(const std::string& fileName, bool debug)
         if (debug)
             system("pause");
     }
-    if (!isFileContainsSortedArray(fileNames[0])) {
-        std::cout << "File is not sorted!\n";
-        exit(-1);
-    }
     fstream sortedFile(std::string("SORTED") + fileName, std::ios::out);
     files[0].open(fileNames[0], std::ios::in);
     while (files[0] >> number)
@@ -163,4 +168,102 @@ void directSortFile(const std::string& fileName, bool debug)
     sortedFile << '\n';
     sortedFile.close();
     files[0].close();
+    return isFileContainsSortedArray(std::string("SORTED") + fileName);
+}
+
+bool naturalSortFile(const std::string& fileName, bool debug)
+{
+    if (isNumericFileEmpty(fileName))
+        return true;
+    fstream file = openAndProcessFile(fileName, std::ios::in);
+    std::string fileNames[4];
+    fstream files[4];
+    {
+        std::string currentFileName = std::string("A") + fileName;
+        for (int i = 0; i < 4; ++i)
+        {
+            currentFileName[0] = 'A' + i;
+            fileNames[i] = currentFileName;
+        }
+    }
+    for (int i = 0; i < 2; ++i)
+        files[i] = openAndProcessFile(fileNames[i], std::ios::out);
+    int currentFile = 0, prevNumber, nextNumber;
+    file >> prevNumber;
+    files[currentFile] << prevNumber << ' ';
+    while (file >> nextNumber)
+    {
+        if (nextNumber < prevNumber) {
+            if (debug)
+                files[currentFile] << "\n";
+            currentFile = 1 - currentFile;
+        }
+        prevNumber = nextNumber;
+        files[currentFile] << prevNumber << ' ';
+    }
+    file.close();
+    for (int i = 0; i < 2; ++i)
+        files[i].close();
+    if (debug)
+        system("pause");
+    while (!isNumericFileEmpty(fileNames[1]))
+    {
+        for (int i = 0; i < 2; ++i)
+            files[i] = openAndProcessFile(fileNames[i], std::ios::in);
+        for (int i = 2; i < 4; ++i)
+            files[i] = openAndProcessFile(fileNames[i], std::ios::out);
+        int prevNumbers[2], nextNumbers[2];
+        for (int i = 0; i < 2; ++i) {
+            files[i] >> prevNumbers[i];
+            nextNumbers[i] = prevNumbers[i];
+        }
+        currentFile = 0;
+        while (!files[0].eof() || !files[1].eof())
+        {
+            while (!files[0].eof() && !files[1].eof() && !(prevNumbers[0] > nextNumbers[0]) && !(prevNumbers[1] > nextNumbers[1]))
+            {
+                if (nextNumbers[0] < nextNumbers[1])
+                {
+                    files[currentFile + 2] << nextNumbers[0] << ' ';
+                    prevNumbers[0] = nextNumbers[0];
+                    files[0] >> nextNumbers[0];
+                }
+                else
+                {
+                    files[currentFile + 2] << nextNumbers[1] << ' ';
+                    prevNumbers[1] = nextNumbers[1];
+                    files[1] >> nextNumbers[1];
+                }
+            }
+            for (int i = 0; i < 2; ++i)
+            {
+                while (!files[i].eof() && !(prevNumbers[i] > nextNumbers[i]))
+                {
+                    files[currentFile + 2] << nextNumbers[i] << ' ';
+                    prevNumbers[i] = nextNumbers[i];
+                    files[i] >> nextNumbers[i];
+                }
+            }
+            for (int i = 0; i < 2; ++i)
+                prevNumbers[i] = nextNumbers[i];
+            if (debug)
+                files[currentFile + 2] << "\n";
+            currentFile = 1 - currentFile;
+        }
+        std::swap(fileNames[0], fileNames[2]);
+        std::swap(fileNames[1], fileNames[3]);
+        for (int i = 0; i < 4; ++i)
+            files[i].close();
+        if (debug)
+            system("pause");
+    }
+    fstream sortedFile(std::string("SORTED") + fileName, std::ios::out);
+    files[0].open(fileNames[0], std::ios::in);
+    int number;
+    while (files[0] >> number)
+        sortedFile << number << ' ';
+    sortedFile << '\n';
+    sortedFile.close();
+    files[0].close();
+    return isFileContainsSortedArray(std::string("SORTED") + fileName);
 }
