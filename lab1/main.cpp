@@ -161,7 +161,7 @@ bool directSortFile(const std::string& fileName, bool debug)
         if (debug)
             system("pause");
     }
-    fstream sortedFile(std::string("SORTED") + fileName, std::ios::out);
+    fstream sortedFile = openAndProcessFile(std::string("SORTED") + fileName, std::ios::out);
     files[0].open(fileNames[0], std::ios::in);
     while (files[0] >> number)
         sortedFile << number << ' ';
@@ -257,7 +257,7 @@ bool naturalSortFile(const std::string& fileName, bool debug)
         if (debug)
             system("pause");
     }
-    fstream sortedFile(std::string("SORTED") + fileName, std::ios::out);
+    fstream sortedFile = openAndProcessFile(std::string("SORTED") + fileName, std::ios::out);
     files[0].open(fileNames[0], std::ios::in);
     int number;
     while (files[0] >> number)
