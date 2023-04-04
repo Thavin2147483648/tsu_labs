@@ -7,7 +7,6 @@
 
 BinaryTree::Node::Node(int key, Node *parent, Node *left, Node *right)
 {
-    std::cout << "Created node...\n";
     m_parent = parent;
     m_left = left;
     m_right = right;

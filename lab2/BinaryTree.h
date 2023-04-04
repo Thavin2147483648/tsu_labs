@@ -22,8 +22,6 @@ public:
         int getKey() const;
         void setKey(int key);
         int getChildrenCount() const;
-
-        ~Node() { std::cout << "Deleted node...\n"; }
     private:
         Node* m_parent;
         Node* m_left;
@@ -48,7 +46,7 @@ public:
         void init(const Node* node);
         const Node* getCurrentNode() const;
         void next();
-        bool isEnd();
+        bool isEnd(); //hasNext
     private:
         std::queue<const Node*> m_queue;
     };
