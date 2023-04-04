@@ -209,28 +209,28 @@ int BinaryTree::getMaxKey(const BinaryTree::Node *node) const
     return std::max(node->getKey(), std::max(this->getMaxKey(node->getLeft()), this->getMaxKey(node->getRight())));
 }
 
-BinaryTree::Node* BinaryTree::addNode(int key)
+BinaryTree::Node* BinaryTree::addNode(int key, int priority)
 {
     if (m_root == nullptr)
         return m_root = new Node(key);
     else
-        return this->addNode(key, this->getRoot());
+        return this->addNode(key, this->getRoot(), priority);
 }
 
-BinaryTree::Node* BinaryTree::addNode(int key, BinaryTree::Node *node)
+BinaryTree::Node* BinaryTree::addNode(int key, BinaryTree::Node *node, int priority)
 {
     if (node == nullptr)
-        return this->addNode(key);
+        return this->addNode(key, priority);
     int choice;
-    if (node->getLeft() == nullptr)
-        choice = 0;
-    else if (node->getRight() == nullptr)
-        choice = 1;
+    Node* children[2] = { node->getLeft(), node->getRight() };
+    if (children[priority] == nullptr)
+        choice = priority;
+    else if (children[1 - priority] == nullptr)
+        choice = 1 - priority;
     else
         choice = rand() % 2;
-    Node* children[2] = { node->getLeft(), node->getRight() };
     if (children[choice] != nullptr)
-        return this->addNode(key, children[choice]);
+        return this->addNode(key, children[choice], priority);
     Node* new_node = new Node(key);
     if (choice == 0)
         Node::setLeftConnection(node, new_node);

@@ -68,8 +68,8 @@ public:
     int getMaxKey() const;
     int getMinKey(const Node* node) const;
     int getMaxKey(const Node* node) const;
-    Node* addNode(int key);
-    Node* addNode(int key, Node* node);
+    Node* addNode(int key, int priority = 0);
+    Node* addNode(int key, Node* node, int priority = 0);
     void print(int marginLeft, int levelSpacing) const;
     void print(const Node* node, int marginLeft, int levelSpacing) const;
     Node* find(int key);
