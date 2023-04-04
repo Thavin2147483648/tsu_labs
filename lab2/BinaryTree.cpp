@@ -371,6 +371,8 @@ int BinaryTree::getLevelIndex(int key) const
 int BinaryTree::getLevelIndex(int key, const BinaryTree::Node *node) const
 {
     const Node* nodeFind = this->find(key, node);
+    if (nodeFind == nullptr)
+        return -1;
     int index = 0;
     while (nodeFind != m_root) {
         nodeFind = nodeFind->getParent();
