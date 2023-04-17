@@ -3,6 +3,8 @@
 #include <vector>
 #include <queue>
 
+class BinarySearchTree;
+
 class BinaryTree {
 public:
     struct Info {
@@ -22,6 +24,8 @@ public:
         int getKey() const;
         void setKey(int key);
         int getChildrenCount() const;
+        bool isLeft() const;
+        bool isRight() const;
     private:
         Node* m_parent;
         Node* m_left;
@@ -36,6 +40,7 @@ public:
         void m_setRight(Node *right);
 
         friend class BinaryTree;
+        friend class BinarySearchTree;
     };
 
     class ConstIterator {
@@ -46,14 +51,30 @@ public:
         void init(const Node* node);
         const Node* getCurrentNode() const;
         void next();
-        bool isEnd(); //hasNext
+        bool hasNext() const;
+        bool isEnd() const; //hasNext
     private:
         std::queue<const Node*> m_queue;
     };
 
+    class ConstLnrIterator {
+    public:
+        explicit ConstLnrIterator(const BinaryTree& tree);
+        explicit ConstLnrIterator(const Node* node);
+        void init(const BinaryTree& tree);
+        void init(const Node* node);
+        const Node* getCurrentNode() const;
+        void next();
+        bool hasNext() const;
+        bool isEnd() const;
+    private:
+        const Node* m_root;
+        const Node* m_currentNode;
+    };
+
     BinaryTree();
     BinaryTree(const BinaryTree& tree);
-    ~BinaryTree();
+    virtual ~BinaryTree();
     Node* getRoot();
     const Node* getRoot() const;
     void deleteTree();
@@ -66,29 +87,29 @@ public:
     int getHeight(const Node* node) const;
     int getNodeCount() const;
     int getNodeCount(const Node* node) const;
-    int getMinKey() const;
-    int getMaxKey() const;
-    int getMinKey(const Node* node) const;
-    int getMaxKey(const Node* node) const;
-    Node* addNode(int key, int priority = 0);
-    Node* addNode(int key, Node* node, int priority = 0);
+    virtual int getMinKey() const;
+    virtual int getMaxKey() const;
+    virtual int getMinKey(const Node* node) const;
+    virtual int getMaxKey(const Node* node) const;
+    virtual Node* addNode(int key, int priority = 0);
+    virtual Node* addNode(int key, Node* node, int priority = 0);
     void print(int marginLeft, int levelSpacing) const;
     void print(const Node* node, int marginLeft, int levelSpacing) const;
-    Node* find(int key);
-    const Node* find(int key) const;
-    Node* find(int key, const Node* node);
-    const Node* find(int key, const Node* node) const;
-    bool deleteNode(int key);
-    bool deleteNode(int key, Node* node);
-    void deleteNode(Node* nodeToDelete, Node* node);
+    virtual Node* find(int key);
+    virtual const Node* find(int key) const;
+    virtual Node* find(int key, const Node* node);
+    virtual const Node* find(int key, const Node* node) const;
+    virtual bool deleteNode(int key);
+    virtual bool deleteNode(int key, Node* node);
+    virtual void deleteNode(Node* nodeToDelete, Node* node);
     bool isBalanced() const;
     bool isBalanced(const Node* node) const;
     Info getInfo() const;
     Info getInfo(const Node* node) const;
     int getKeySum() const;
     int getKeySum(const Node* node) const;
-    int getLevelIndex(int key) const;
-    int getLevelIndex(int key, const Node* node) const;
+    virtual int getLevelIndex(int key) const;
+    virtual int getLevelIndex(int key, const Node* node) const;
     std::vector<int> getKeys() const;
     std::vector<int> getKeys(const Node* node) const;
     void printLevel(int index) const;
@@ -99,7 +120,7 @@ public:
     void printLeaves(const Node* node) const;
 
     BinaryTree& operator =(const BinaryTree& tree);
-private:
+protected:
     Node* m_root;
 
     Node* m_copyTree(const Node* node) const;
