@@ -505,7 +505,7 @@ void BinaryTree::ConstIterator::next()
     m_queue.pop();
 }
 
-bool BinaryTree::ConstIterator::isEnd()
+bool BinaryTree::ConstIterator::isEnd() const
 {
     return m_queue.empty();
 }
@@ -522,4 +522,9 @@ void BinaryTree::ConstIterator::init(const BinaryTree::Node *node)
         m_queue.pop();
     if (node != nullptr)
         this->m_queue.push(node);
+}
+
+bool BinaryTree::ConstIterator::hasNext() const
+{
+    return !m_queue.empty();
 }
