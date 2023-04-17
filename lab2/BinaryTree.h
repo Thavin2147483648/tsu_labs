@@ -22,6 +22,8 @@ public:
         int getKey() const;
         void setKey(int key);
         int getChildrenCount() const;
+        bool isLeft() const;
+        bool isRight() const;
     private:
         Node* m_parent;
         Node* m_left;

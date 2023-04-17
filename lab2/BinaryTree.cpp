@@ -89,6 +89,16 @@ void BinaryTree::Node::setRightConnection(BinaryTree::Node *parent, BinaryTree::
         right->m_setParent(parent);
 }
 
+bool BinaryTree::Node::isLeft() const
+{
+    return m_parent != nullptr && m_parent->getLeft() == this;
+}
+
+bool BinaryTree::Node::isRight() const
+{
+    return m_parent != nullptr && m_parent->getRight() == this;
+}
+
 BinaryTree::BinaryTree()
 {
     m_root = nullptr;
