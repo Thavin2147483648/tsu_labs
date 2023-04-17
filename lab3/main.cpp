@@ -1,7 +1,6 @@
 #include <iostream>
-#include "BinaryTree.h"
-#include "../lab3/BinarySearchTree.h"
-#include "BinaryTreeTester.h"
+#include "..\lab2\BinaryTree.h"
+#include "BinarySearchTree.h"
 using std::cin, std::cout;
 
 int main()
