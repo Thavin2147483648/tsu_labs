@@ -528,3 +528,66 @@ bool BinaryTree::ConstIterator::hasNext() const
 {
     return !m_queue.empty();
 }
+
+BinaryTree::ConstLnrIterator::ConstLnrIterator(const BinaryTree &tree)
+{
+    m_currentNode = nullptr;
+    m_root = nullptr;
+    this->init(tree.getRoot());
+}
+
+BinaryTree::ConstLnrIterator::ConstLnrIterator(const BinaryTree::Node *node)
+{
+    m_currentNode = nullptr;
+    m_root = nullptr;
+    this->init(node);
+}
+
+void BinaryTree::ConstLnrIterator::init(const BinaryTree &tree)
+{
+    this->init(tree.getRoot());
+}
+
+void BinaryTree::ConstLnrIterator::init(const BinaryTree::Node *node)
+{
+    m_root = node;
+    m_currentNode = node;
+    if (m_currentNode != nullptr) {
+        while (m_currentNode->getLeft() != nullptr)
+            m_currentNode = m_currentNode->getLeft();
+    }
+}
+
+const BinaryTree::Node *BinaryTree::ConstLnrIterator::getCurrentNode() const
+{
+    return m_currentNode;
+}
+
+void BinaryTree::ConstLnrIterator::next()
+{
+    if (m_currentNode == nullptr)
+        return;
+    if (m_currentNode->getRight() != nullptr) {
+        m_currentNode = m_currentNode->getRight();
+        while (m_currentNode->getLeft() != nullptr)
+            m_currentNode = m_currentNode->getLeft();
+        return;
+    }
+    while (m_currentNode->isRight() && m_currentNode != m_root)
+        m_currentNode = m_currentNode->getParent();
+    if (m_currentNode == m_root) {
+        m_currentNode = nullptr;
+        return;
+    }
+    m_currentNode = m_currentNode->getParent();
+}
+
+bool BinaryTree::ConstLnrIterator::hasNext() const
+{
+    return m_currentNode != nullptr;
+}
+
+bool BinaryTree::ConstLnrIterator::isEnd() const
+{
+    return m_currentNode == nullptr;
+}

@@ -54,6 +54,21 @@ public:
         std::queue<const Node*> m_queue;
     };
 
+    class ConstLnrIterator {
+    public:
+        explicit ConstLnrIterator(const BinaryTree& tree);
+        explicit ConstLnrIterator(const Node* node);
+        void init(const BinaryTree& tree);
+        void init(const Node* node);
+        const Node* getCurrentNode() const;
+        void next();
+        bool hasNext() const;
+        bool isEnd() const;
+    private:
+        const Node* m_root;
+        const Node* m_currentNode;
+    };
+
     BinaryTree();
     BinaryTree(const BinaryTree& tree);
     ~BinaryTree();
