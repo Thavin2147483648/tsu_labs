@@ -38,8 +38,8 @@ void BinaryTreeTester::destructor()
         BinaryTree tree;
         for (int j = 0; j < m_maxSize; ++j)
             tree.addNode(j);
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
+    //getchar();
     std::cout << "End testing destructor()\n";
 }
 
@@ -58,8 +58,8 @@ void BinaryTreeTester::remove()
     }
 
     while (!keys.empty()) {
-        tree.print(2, 4);
-        std::cout << "===========================================\n";
+//        tree.print(2, 4);
+        //std::cout << "===========================================\n";
         int removedNodeIndex = rand() % keys.size();
 
         tree.deleteNode(invalidKey);
@@ -69,7 +69,7 @@ void BinaryTreeTester::remove()
         keys.erase(keys.begin() + removedNodeIndex);
         check_remove(tree, keys.size());
     }
-    tree.print(2, 4);
+//    tree.print(2, 4);
     tree.deleteNode(invalidKey);
     check_remove(tree, keys.size());
     std::cout << "End testing remove()\n";
@@ -115,7 +115,7 @@ void BinaryTreeTester::height_longOnlyLeftSubtree()
         runner = runner->getLeft();
         check_height(tree, i + 1);
     }
-    tree.print(2, 4);
+//    tree.print(2, 4);
     std::cout << "End testing height_longOnlyLeftSubtree()\n";
 }
 
@@ -130,7 +130,7 @@ void BinaryTreeTester::height_longOnlyRightSubtree()
         runner = runner->getRight();
         check_height(tree, i + 1);
     }
-    tree.print(2, 4);
+//    tree.print(2, 4);
     std::cout << "End testing height_longOnlyRightSubtree()\n";
 }
 
@@ -148,7 +148,7 @@ void BinaryTreeTester::height_longOnlyLeftAndRightSubtrees()
         rightRunner = rightRunner->getRight();
         check_height(tree, i + 1);
     }
-    tree.print(2, 4);
+//    tree.print(2, 4);
     std::cout << "End testing height_longOnlyLeftAndRightSubtrees()\n";
 }
 
@@ -182,7 +182,7 @@ void BinaryTreeTester::height_longRandomZigzagSubtrees()
         }
         check_height(tree, i + 1);
     }
-    tree.print(2, 4);
+//    tree.print(2, 4);
     std::cout << "End testing height_longRandomZigzagSubtrees()\n";
 }
 

@@ -453,6 +453,19 @@ BinaryTree &BinaryTree::operator=(const BinaryTree &tree)
     return *this;
 }
 
+void BinaryTree::deleteSubtrees()
+{
+    this->deleteSubtrees(this->getRoot());
+}
+
+void BinaryTree::deleteSubtrees(BinaryTree::Node *node)
+{
+    if (node == nullptr)
+        return;
+    this->deleteTree(node->getLeft());
+    this->deleteTree(node->getRight());
+}
+
 BinaryTree::ConstIterator::ConstIterator(const BinaryTree &tree)
 {
     if (!tree.isEmpty())

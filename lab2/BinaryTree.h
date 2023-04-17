@@ -58,6 +58,8 @@ public:
     const Node* getRoot() const;
     void deleteTree();
     void deleteTree(Node* node);
+    void deleteSubtrees();
+    void deleteSubtrees(Node* node);
     bool isEmpty() const;
     BinaryTree copyTree(const Node* node) const;
     int getHeight() const;
