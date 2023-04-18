@@ -587,7 +587,7 @@ bool BinaryTree::ConstLnrIterator::hasNext() const
     return m_currentNode != nullptr;
 }
 
-bool BinaryTree::ConstLnrIterator::isEnd() const
+bool BinaryTree::ConstLnrIterator::isEnd() const //atEnd
 {
     return m_currentNode == nullptr;
 }

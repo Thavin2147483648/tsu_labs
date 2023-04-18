@@ -86,11 +86,6 @@ void BinarySearchTree::deleteNode(BinaryTree::Node *nodeToDelete, BinaryTree::No
     this->deleteNode(nodeReplacement, node);
 }
 
-BinaryTree::Node *BinarySearchTree::find(int key, const BinaryTree::Node *node)
-{
-    return const_cast<BinaryTree::Node*>(const_cast<const BinarySearchTree*>(this)->find(key, node));
-}
-
 const BinaryTree::Node *BinarySearchTree::find(int key, const BinaryTree::Node *node) const
 {
     const Node* it = node;
@@ -112,51 +107,9 @@ BinarySearchTree &BinarySearchTree::operator=(const BinarySearchTree &tree)
     return *this;
 }
 
-int BinarySearchTree::getMinKey() const
-{
-    return getMinKey(this->getRoot());
-}
-
-int BinarySearchTree::getMaxKey() const
-{
-    return getMaxKey(this->getRoot());
-}
-
-BinaryTree::Node *BinarySearchTree::addNode(int key, int priority)
-{
-    if (m_root == nullptr)
-        return m_root = new Node(key);
-    else
-        return this->addNode(key, this->getRoot(), priority);
-}
-
 const BinaryTree::Node *BinarySearchTree::find(int key) const
 {
     return this->find(key, this->getRoot());
-}
-
-BinaryTree::Node *BinarySearchTree::find(int key)
-{
-    return this->find(key, this->getRoot());
-}
-
-bool BinarySearchTree::deleteNode(int key)
-{
-    return this->deleteNode(key, this->getRoot());
-}
-
-bool BinarySearchTree::deleteNode(int key, BinaryTree::Node *node)
-{
-    Node* nodeToDelete = this->find(key, node);
-    if (nodeToDelete == nullptr)
-        return false;
-    this->deleteNode(nodeToDelete, node);
-    return true;
-}
-
-int BinarySearchTree::getLevelIndex(int key) const
-{
-    return this->getLevelIndex(key, this->getRoot());
 }
 
 int BinarySearchTree::getLevelIndex(int key, const BinaryTree::Node *node) const

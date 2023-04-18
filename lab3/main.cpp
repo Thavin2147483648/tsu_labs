@@ -11,8 +11,9 @@ int main()
     for (int i = 0; i < 12; ++i)
         tree.addNode(values[i]);
     tree.print(2, 4);
-    for (BinaryTree::ConstLnrIterator it(tree); it.hasNext(); it.next())
-        cout << it.getCurrentNode()->getKey() << ' ';
+    cout << "Delete\n";
+    tree.deleteNode(50);
+    tree.print(2, 4);
     cout << '\n';
     return 0;
 }
