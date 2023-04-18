@@ -51,8 +51,8 @@ public:
         void init(const Node* node);
         const Node* getCurrentNode() const;
         void next();
-        bool hasNext() const;
-        bool isEnd() const; //hasNext
+        bool hasCurrent() const;
+        bool isEnd() const;
     private:
         std::queue<const Node*> m_queue;
     };
@@ -65,7 +65,7 @@ public:
         void init(const Node* node);
         const Node* getCurrentNode() const;
         void next();
-        bool hasNext() const;
+        bool hasCurrent() const;
         bool isEnd() const;
     private:
         const Node* m_root;
