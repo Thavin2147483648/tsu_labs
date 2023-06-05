@@ -25,15 +25,15 @@ HuffmanTree::HuffmanTree()
 void HuffmanTree::build(const std::string &text)
 {
     clear();
-    int F[256] = {};
+    int frequencies[256] = {};
     for (int i = 0; i < text.length(); ++i)
-        ++F[text[i]];
+        ++frequencies[text[i]];
     std::list<Node*> nodes;
     for (int i = 0; i < 256; ++i) {
-        if (F[i] == 0)
+        if (frequencies[i] == 0)
             continue;
         Node* new_node = new Node;
-        new_node->frequency = F[i];
+        new_node->frequency = frequencies[i];
         new_node->symbols.insert(i);
         nodes.push_back(new_node);
     }
@@ -85,6 +85,11 @@ double HuffmanTree::encode(const std::string &text, std::string &encoded)
     for (char c : text) {
         if (!(m_root->symbols.contains(c)))
             return -1;
+        if (m_root->symbols.size() == 1)
+        {
+            encoded.push_back('0');
+            continue;
+        }
         Node* node = m_root;
         while (node->symbols.size() > 1) {
             if (node->left != nullptr && node->left->symbols.contains(c)) {
@@ -107,6 +112,12 @@ bool HuffmanTree::decode(const std::string &encoded, std::string &decoded)
     if (node == nullptr)
         return false;
     for (char c : encoded) {
+        if (m_root->symbols.size() == 1) {
+            if (c != '0')
+                return false;
+            decoded += *(node->symbols.begin());
+            continue;
+        }
         if (c == '0')
             node = node->left;
         else if (c == '1')

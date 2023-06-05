@@ -5,6 +5,15 @@
 class HuffmanTree
 {
 public:
+    HuffmanTree();
+    ~HuffmanTree();
+    void clear();
+    void printNodes() const;
+    void build(const std::string& text);
+    double encode(const std::string& text, std::string& encoded);
+    bool decode(const std::string& encoded, std::string& decoded);
+
+private:
     struct Node
     {
         Node* left = nullptr;
@@ -15,17 +24,10 @@ public:
         void print();
     };
 
-    HuffmanTree();
-    ~HuffmanTree();
-    void clear();
-    void printNodes() const;
-    void build(const std::string& text);
-    double encode(const std::string& text, std::string& encoded);
-    bool decode(const std::string& encoded, std::string& decoded);
-
 private:
     Node* m_root;
 
+private:
     void m_clear(Node* node);
     void m_printNodes(Node* node) const;
 };
