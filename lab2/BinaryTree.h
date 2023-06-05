@@ -51,8 +51,8 @@ public:
         void init(const Node* node);
         const Node* getCurrentNode() const;
         void next();
-        bool hasNext() const;
-        bool isEnd() const; //hasNext
+        bool hasCurrent() const;
+        bool isEnd() const;
     private:
         std::queue<const Node*> m_queue;
     };
@@ -65,7 +65,7 @@ public:
         void init(const Node* node);
         const Node* getCurrentNode() const;
         void next();
-        bool hasNext() const;
+        bool hasCurrent() const;
         bool isEnd() const;
     private:
         const Node* m_root;
@@ -87,20 +87,20 @@ public:
     int getHeight(const Node* node) const;
     int getNodeCount() const;
     int getNodeCount(const Node* node) const;
-    virtual int getMinKey() const;
-    virtual int getMaxKey() const;
+    int getMinKey() const;
+    int getMaxKey() const;
     virtual int getMinKey(const Node* node) const;
     virtual int getMaxKey(const Node* node) const;
-    virtual Node* addNode(int key, int priority = 0);
+    Node* addNode(int key, int priority = 0);
     virtual Node* addNode(int key, Node* node, int priority = 0);
     void print(int marginLeft, int levelSpacing) const;
     void print(const Node* node, int marginLeft, int levelSpacing) const;
-    virtual Node* find(int key);
+    Node* find(int key);
     virtual const Node* find(int key) const;
-    virtual Node* find(int key, const Node* node);
+    Node* find(int key, const Node* node);
     virtual const Node* find(int key, const Node* node) const;
-    virtual bool deleteNode(int key);
-    virtual bool deleteNode(int key, Node* node);
+    bool deleteNode(int key);
+    bool deleteNode(int key, Node* node);
     virtual void deleteNode(Node* nodeToDelete, Node* node);
     bool isBalanced() const;
     bool isBalanced(const Node* node) const;
@@ -108,7 +108,7 @@ public:
     Info getInfo(const Node* node) const;
     int getKeySum() const;
     int getKeySum(const Node* node) const;
-    virtual int getLevelIndex(int key) const;
+    int getLevelIndex(int key) const;
     virtual int getLevelIndex(int key, const Node* node) const;
     std::vector<int> getKeys() const;
     std::vector<int> getKeys(const Node* node) const;

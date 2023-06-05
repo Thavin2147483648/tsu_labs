@@ -524,7 +524,7 @@ void BinaryTree::ConstIterator::init(const BinaryTree::Node *node)
         this->m_queue.push(node);
 }
 
-bool BinaryTree::ConstIterator::hasNext() const
+bool BinaryTree::ConstIterator::hasCurrent() const
 {
     return !m_queue.empty();
 }
@@ -582,12 +582,12 @@ void BinaryTree::ConstLnrIterator::next()
     m_currentNode = m_currentNode->getParent();
 }
 
-bool BinaryTree::ConstLnrIterator::hasNext() const
+bool BinaryTree::ConstLnrIterator::hasCurrent() const
 {
     return m_currentNode != nullptr;
 }
 
-bool BinaryTree::ConstLnrIterator::isEnd() const
+bool BinaryTree::ConstLnrIterator::isEnd() const //atEnd
 {
     return m_currentNode == nullptr;
 }
