@@ -94,7 +94,7 @@ int &HashTable::operator[](int key)
 
 int HashTable::m_hashFunction(int key) const
 {
-    return key % m_size + (1 + key % (m_size - 2)) % m_size;
+    return std::abs(key) % m_size + (1 + std::abs(key) % (m_size - 2)) % m_size;
 }
 
 void HashTable::m_processSize(int size)
