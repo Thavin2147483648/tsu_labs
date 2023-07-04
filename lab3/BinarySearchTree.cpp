@@ -36,22 +36,26 @@ BinaryTree::Node *BinarySearchTree::addNode(int key, BinaryTree::Node *node, int
 {
     if (node == nullptr)
         return this->BinaryTree::addNode(key, priority);
-    Node* it = node, *new_node = new Node(key);
+    Node* it = node, *new_node;
     while (true) {
         if (key < it->getKey()) {
             if (it->getLeft() == nullptr) {
+                new_node = new Node(key);
                 Node::setLeftConnection(it, new_node);
                 return new_node;
             }
             it = it->getLeft();
         }
-        else {
+        else if (key > it->getKey()) {
             if (it->getRight() == nullptr) {
+                new_node = new Node(key);
                 Node::setRightConnection(it, new_node);
                 return new_node;
             }
             it = it->getRight();
         }
+        else
+            return it;
     }
 }
 

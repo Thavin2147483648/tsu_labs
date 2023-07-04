@@ -13,13 +13,14 @@ public:
     int getMinKey(const Node* node) const override;
     int getMaxKey(const Node* node) const override;
     using BinaryTree::addNode;
-    Node* addNode(int key, Node* node, int priority = 0) override;
     using BinaryTree::deleteNode;
     void deleteNode(Node* nodeToDelete, Node* node) override;
     const Node* find(int key) const override;
     const Node* find(int key, const Node* node) const override;
     using BinaryTree::getLevelIndex;
     int getLevelIndex(int key, const Node* node) const override;
-
     BinarySearchTree& operator =(const BinarySearchTree& tree);
+
+protected:
+    Node* addNode(int key, Node* node, int priority = 0) override;
 };
