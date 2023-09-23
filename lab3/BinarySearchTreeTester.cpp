@@ -27,9 +27,9 @@ bool BinarySearchTreeTester::isSearchTree(const BinaryTree::Node *root)
 {
     if (root == nullptr)
         return true;
-    if (root->getLeft() != nullptr && root->getLeft()->getKey() >= root->getKey())
+    if (root->getLeft() != nullptr && getMaxKey(root->getLeft()) > root->getKey())
         return false;
-    if (root->getRight() != nullptr && root->getRight()->getKey() < root->getKey())
+    if (root->getRight() != nullptr && getMinKey(root->getRight()) < root->getKey())
         return false;
     return isSearchTree(root->getLeft()) && isSearchTree(root->getRight());
 }
@@ -57,4 +57,18 @@ void BinarySearchTreeTester::check_assign(const BinaryTree::Node *tree1, const B
     BinaryTreeTester::check_assign(tree1, tree2);
     assert(isSearchTree(tree1));
     assert(isSearchTree(tree2));
+}
+
+int BinarySearchTreeTester::getMinKey(const BinaryTree::Node *node)
+{
+    if (node == nullptr)
+        return INT_MAX;
+    return std::min(std::min(getMinKey(node->getLeft()), getMinKey(node->getRight())), node->getKey());
+}
+
+int BinarySearchTreeTester::getMaxKey(const BinaryTree::Node *node)
+{
+    if (node == nullptr)
+        return INT_MIN;
+    return std::max(std::max(getMaxKey(node->getLeft()), getMaxKey(node->getRight())), node->getKey());
 }

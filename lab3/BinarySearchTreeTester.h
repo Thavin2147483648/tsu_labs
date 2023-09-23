@@ -9,7 +9,9 @@ public:
     void test(int size) override;
 protected:
     bool isSearchTree(const BinaryTree& tree);
-    bool isSearchTree(const BinaryTree::Node* root);
+    bool isSearchTree(const BinaryTree::Node *root);
+    int getMinKey(const BinaryTree::Node *node);
+    int getMaxKey(const BinaryTree::Node *node);
     BinaryTree* allocateTree() override;
     void check_addAndCount(const BinaryTree& tree, int size) override;
     void check_remove(const BinaryTree& tree, int size) override;
